@@ -13,6 +13,7 @@ $sdk = new Sdk($options);
 $languageDetection = new LanguageDetection($sdk);
 
 $strings = [
+    'How are you?',
     'Heute scheint die Sonne',
     'Je m\'appelle Julien',
     'Vamos a la zapatería',
