@@ -1,0 +1,36 @@
+{
+    "name": "ai-station/ai-station-php",
+    "description": "A PHP client for AI Station",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "AIStation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Api\\Client\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.4|^8",
+        "php-http/client-common": "^2.3",
+        "php-http/discovery": "^1.12",
+        "psr/http-client": "^1.0",
+        "psr/http-client-implementation": "^1.0",
+        "psr/http-factory": "^1.0",
+        "symfony/options-resolver": "^5.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "laminas/laminas-diactoros": "^2.4",
+        "php-http/curl-client": "^2.1",
+        "php-http/mock-client": "^1.4",
+        "phpunit/phpunit": "^9.5",
+        "symfony/var-dumper": "^5.1"
+    }
+}
