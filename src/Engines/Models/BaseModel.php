@@ -23,7 +23,7 @@ class BaseModel
      * @throws \Http\Client\Exception
      */
     public function train() {
-        $response = $this->sdk->getHttpClient()->post('/engines/image-classification/train', [], json_encode([
+        $response = $this->sdk->getHttpClient()->post('/engines/image-classification/train-model', [], json_encode([
             'name' => $this->modelName,
         ]));
 
