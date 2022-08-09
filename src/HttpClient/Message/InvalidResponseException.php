@@ -1,6 +1,6 @@
 <?php
 
-namespace AIStation\Engines\Responses;
+namespace AIStation\HttpClient\Message;
 
 class InvalidResponseException extends \Exception
 {

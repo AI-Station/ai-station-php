@@ -1,8 +1,9 @@
 <?php
 namespace AIStation\Engines;
 
+use AIStation\Engines\Models\ImageClassificationModel;
 use AIStation\Engines\Responses\ImageClassificationResponse;
-use AIStation\Engines\Responses\InvalidResponseException;
+use AIStation\HttpClient\Message\InvalidResponseException;
 use AIStation\HttpClient\Message\ResponseMediator;
 use Http\Client\Exception;
 use Intervention\Image\ImageManager;
@@ -20,17 +21,26 @@ class ImageClassification extends BaseEngine {
     public function predict($image): ImageClassificationResponse {
         // TODO: Add support to configure the image driver
         $manager = new ImageManager();
-        $image = $manager->make($image)->resize(300, 200);
+        $image = $manager->make($image);
 
         $response = $this->sdk->getHttpClient()->post('/engines/image-classification/predict', [], json_encode([
             'image' => $image->resize(160, 160)->encode('data-url')->encoded,
         ]));
 
-        if($response->getStatusCode() !== 200) {
-            throw new InvalidResponseException();
-        }
-        $content = ResponseMediator::getContent($response);
+        return new ImageClassificationResponse(ResponseMediator::getContent($response));
+    }
 
-        return new ImageClassificationResponse($content);
+    /**
+     * Creates, or fetches an image classification model which can be trained in the next steps
+     *
+     * @param string $modelName A short name that describes this model
+     * @param string $class1 A name for the first class of images you want to detect (e.g. cats)
+     * @param string $class2 A name for the first class of images you want to detect (e.g. dogs)
+     * @return ImageClassificationModel
+     */
+    public function createModel(string $modelName, string $class1, string $class2): ImageClassificationModel {
+        $model = new ImageClassificationModel($this->sdk, $modelName, $class1, $class2);
+        $model->initialize();
+        return $model;
     }
 }
