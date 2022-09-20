@@ -18,13 +18,16 @@ class ImageClassification extends BaseEngine {
      * @throws Exception
      * @throws InvalidResponseException
      */
-    public function predict($image): ImageClassificationResponse {
+    public function predict($image, string $modelName = ''): ImageClassificationResponse {
         // TODO: Add support to configure the image driver
         $manager = new ImageManager();
         $image = $manager->make($image);
 
         $response = $this->sdk->getHttpClient()->post('/engines/image-classification/predict', [], json_encode([
-            'image' => $image->resize(160, 160)->encode('data-url')->encoded,
+            'data' => [
+                'image' => $image->resize(160, 160)->encode('data-url')->encoded,
+            ],
+            'modelName' => $modelName,
         ]));
 
         return new ImageClassificationResponse(ResponseMediator::getContent($response));

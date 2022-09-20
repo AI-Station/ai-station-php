@@ -24,7 +24,7 @@ class BaseModel
      */
     public function train() {
         $response = $this->sdk->getHttpClient()->post('/engines/image-classification/train-model', [], json_encode([
-            'name' => $this->modelName,
+            'modelName' => $this->modelName,
         ]));
 
         return ResponseMediator::getContent($response);
